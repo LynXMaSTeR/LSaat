@@ -16,6 +16,10 @@ Kurulum için projeyi indirip `LSaat.html` dosyasını tarayıcıda açmanız ye
 - `G`: Saniyeleri göster/gizle
 - `T`: 12/24 saat biçimini değiştir
 
+### Ekran Görüntüleri
+![Koyu Tema Önizleme](assets/preview-dark.gif)
+![Açık Tema Önizleme](assets/preview-light.gif)
+
 ---
 
 ## EN
@@ -28,3 +32,7 @@ To use it, download the project and open `LSaat.html` in your browser.
 - `F`: Toggle fullscreen
 - `G`: Show/hide seconds
 - `T`: Switch between 12-hour and 24-hour formats
+
+### Screenshots
+![Dark Theme Preview](assets/preview-dark.gif)
+![Light Theme Preview](assets/preview-light.gif)
