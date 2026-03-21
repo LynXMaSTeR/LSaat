@@ -1,62 +1,62 @@
 # LSaat
 
-Modern flip-clock arayuzu sunan, tek dosya ile calisan bir web projesi.
+Modern bir flip-clock arayüzü sunan, tek bir HTML dosyasıyla çalışan web projesi.
 
 Repository: https://github.com/LynXMaSTeR/LSaat
 
 ## TR
 
-### Proje Ozeti
-LSaat, saat deneyimini kart-cevirme (flip) animasyon mantigi ile sunan bir arayuzdur.
-Tek bir HTML dosyasi uzerinden calisir ve responsive hesaplamalar ile farkli ekran
-boyutlarina otomatik uyum saglar.
+### Proje Özeti
+LSaat, kart çevirme (flip) animasyonlarıyla çalışan modern bir dijital saat arayüzüdür.
+Tek bir HTML dosyası üzerinden çalışır ve duyarlı yerleşim hesaplamaları sayesinde
+farklı ekran boyutlarına otomatik olarak uyum sağlar.
 
-### Neler Yapar?
-- Saat, dakika ve saniye kartlarini flip animasyonu ile gunceller.
-- Saniye grubunu acip kapatabilir.
-- 12 saat / 24 saat bicimi arasinda gecis yapabilir.
-- Tam ekran moduna gecebilir.
-- Renkleri ters cevirme (invert) modu sunar.
-- Tarih bilgisini alt bolumde gosterir.
+### Özellikler
+- Saat, dakika ve saniye kartlarını flip animasyonuyla günceller.
+- Saniye grubunu gösterip gizleyebilirsiniz.
+- 12 saat ve 24 saat biçimleri arasında geçiş yapabilirsiniz.
+- Tam ekran modunu açıp kapatabilirsiniz.
+- Renkleri ters çevirme (invert) modunu etkinleştirebilirsiniz.
+- Tarih bilgisini alt bölümde görüntüler.
 
-### Klavye Kisayollari
-- `D`: Invert ac/kapat
-- `F`: Tam ekran ac/kapat
-- `G`: Saniye goster/gizle
-- `T`: 12/24 saat bicimi degistir
+### Klavye Kısayolları
+- `D`: İnvert modunu aç/kapat
+- `F`: Tam ekran modunu aç/kapat
+- `G`: Saniye grubunu göster/gizle
+- `T`: 12/24 saat biçimi arasında geçiş yap
 
 ### Teknik Detaylar
 - Dosya: `LSaat.html`
 - Teknolojiler: HTML, CSS, JavaScript
-- Layout yaklasimi:
-	- Grup bosluklari (`group-gap`) viewport genisligine gore hesaplanir.
-	- Kart genisligi (`card-width`) gorunen grup sayisina gore dinamik belirlenir.
-	- Yazi boyutlari (`digit-size`, `date-size`) kart boyutlari ile orantili olur.
-- Animasyon:
-	- Ust yari ve alt yari kartlar ayri katmanlar ile cevrilir.
-	- `top-flip` ve `bottom-flip` katmanlari zamanlamali calisir.
+- Yerleşim yaklaşımı:
+	- Grup boşlukları (`group-gap`) ekran genişliğine göre hesaplanır.
+	- Kart genişliği (`card-width`), görünür grup sayısına göre dinamik olarak belirlenir.
+	- Yazı boyutları (`digit-size`, `date-size`), kart ölçülerine orantılı şekilde ölçeklenir.
+- Animasyon yapısı:
+	- Kartların üst ve alt yarımları ayrı katmanlarda işlenir.
+	- `top-flip` ve `bottom-flip` katmanları zamanlamalı olarak birlikte çalışır.
 
-### Yerelde Calistirma
-1. Depoyu klonla veya indir.
-2. `LSaat.html` dosyasini tarayicida ac.
-3. Istersen basit bir local server ile de calistirabilirsin:
+### Yerelde Çalıştırma
+1. Depoyu klonlayın veya indirin.
+2. `LSaat.html` dosyasını tarayıcıda açın.
+3. İsterseniz basit bir yerel sunucu ile de çalıştırabilirsiniz:
 
 ```bash
 python3 -m http.server 8080
 ```
 
-Sonra tarayicida `http://localhost:8080/LSaat.html` adresini ac.
+Daha sonra tarayıcıda `http://localhost:8080/LSaat.html` adresini açın.
 
-### GIF Onizleme (Kendi Dosyalarimiz)
-Dis kaynaktan GIF kullanmiyoruz. Onizlemeler projede yerel dosya olarak tutulur:
+### GIF Önizleme (Kendi Dosyalarımız)
+Harici GIF bağlantısı kullanılmaz. Önizlemeler, proje içinde yerel dosya olarak tutulur:
 - `assets/preview-dark.gif`
 - `assets/preview-light.gif`
 
 ![LSaat Dark Preview](assets/preview-dark.gif)
 ![LSaat Light Preview](assets/preview-light.gif)
 
-### GitHub'a Yukleme
-Asagidaki adimlar sadece gerekli dosyalari gondermek icin yeterlidir:
+### GitHub'a Yükleme
+Aşağıdaki adımlar, yalnızca gerekli dosyaları göndermek için yeterlidir:
 
 ```bash
 git init
@@ -68,8 +68,8 @@ git push -u origin main
 ```
 
 Not:
-- Kimlik dogrulama sorunu olursa GitHub PAT kullan.
-- GIF onizlemeleri README ile birlikte ayni committe gonderilebilir.
+- Kimlik doğrulama sorunu yaşarsanız GitHub PAT kullanın.
+- GIF önizlemelerini README ile birlikte aynı commit içinde gönderebilirsiniz.
 
 ---
 
