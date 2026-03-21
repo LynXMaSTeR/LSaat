@@ -1,29 +1,45 @@
-# LSaat - Flip Clock (HTML)
+# LSaat
+
+Modern flip-clock arayuzu sunan, tek dosya ile calisan bir web projesi.
+
+Repository: https://github.com/LynXMaSTeR/LSaat
 
 ## TR
-### Proje Ozeti
-LSaat, tek bir HTML dosyasi icinde calisan modern gorunumlu bir flip clock (kart cevirme saat) arayuzudur. Responsive yerlesim mantigi sayesinde ekran boyutu degistikce kartlar, bosluklar ve yazi boyutlari dinamik olarak uyarlanir.
 
-### Ozellikler
-- Tek dosya mimarisi: Sadece `LSaat.html`
-- Flip kart animasyonu (saat, dakika, saniye)
-- Saniye gosterimini ac/kapat
-- 12/24 saat bicimi gecisi
-- Tam ekran modu
-- Renkleri ters cevirme modu
-- Tarih gosterimi
-- Ekran genisligine gore responsive hesaplama
+### Proje Ozeti
+LSaat, saat deneyimini kart-cevirme (flip) animasyon mantigi ile sunan bir arayuzdur.
+Tek bir HTML dosyasi uzerinden calisir ve responsive hesaplamalar ile farkli ekran
+boyutlarina otomatik uyum saglar.
+
+### Neler Yapar?
+- Saat, dakika ve saniye kartlarini flip animasyonu ile gunceller.
+- Saniye grubunu acip kapatabilir.
+- 12 saat / 24 saat bicimi arasinda gecis yapabilir.
+- Tam ekran moduna gecebilir.
+- Renkleri ters cevirme (invert) modu sunar.
+- Tarih bilgisini alt bolumde gosterir.
 
 ### Klavye Kisayollari
-- `D`: Renkleri ters cevir
+- `D`: Invert ac/kapat
 - `F`: Tam ekran ac/kapat
-- `G`: Saniyeyi goster/gizle
-- `T`: 12 saat / 24 saat gecisi
+- `G`: Saniye goster/gizle
+- `T`: 12/24 saat bicimi degistir
+
+### Teknik Detaylar
+- Dosya: `LSaat.html`
+- Teknolojiler: HTML, CSS, JavaScript
+- Layout yaklasimi:
+	- Grup bosluklari (`group-gap`) viewport genisligine gore hesaplanir.
+	- Kart genisligi (`card-width`) gorunen grup sayisina gore dinamik belirlenir.
+	- Yazi boyutlari (`digit-size`, `date-size`) kart boyutlari ile orantili olur.
+- Animasyon:
+	- Ust yari ve alt yari kartlar ayri katmanlar ile cevrilir.
+	- `top-flip` ve `bottom-flip` katmanlari zamanlamali calisir.
 
 ### Yerelde Calistirma
-1. Bu depoyu indir.
+1. Depoyu klonla veya indir.
 2. `LSaat.html` dosyasini tarayicida ac.
-3. Alternatif olarak terminalden bulundugu klasorde su komutu calistir:
+3. Istersen basit bir local server ile de calistirabilirsin:
 
 ```bash
 python3 -m http.server 8080
@@ -31,53 +47,63 @@ python3 -m http.server 8080
 
 Sonra tarayicida `http://localhost:8080/LSaat.html` adresini ac.
 
-### GitHub'a Yukleme (Yeni Repo)
-1. GitHub'da yeni bir repo olustur (bos repo tercih edilir).
-2. Terminalde proje klasorune gir:
+### GIF Onizleme (Kendi Dosyalarimiz)
+Dis kaynaktan GIF kullanmiyoruz. Onizlemeler projede yerel dosya olarak tutulur:
+- `assets/preview-dark.gif`
+- `assets/preview-light.gif`
 
-```bash
-cd "/Users/samed/Desktop/Projeler/Antigravity Projeler/LSaat/LSaat"
-```
+![LSaat Dark Preview](assets/preview-dark.gif)
+![LSaat Light Preview](assets/preview-light.gif)
 
-3. Git baslat ve dosyalari ekle:
+### GitHub'a Yukleme
+Asagidaki adimlar sadece gerekli dosyalari gondermek icin yeterlidir:
 
 ```bash
 git init
-git add LSaat.html README.md PROJECT_OVERVIEW.md
+git add LSaat.html README.md assets/preview-dark.gif assets/preview-light.gif
 git commit -m "Initial commit: LSaat HTML flip clock"
-```
-
-4. Ana branch'i ayarla, remote bagla ve push et:
-
-```bash
 git branch -M main
-git remote add origin https://github.com/<kullanici-adi>/<repo-adi>.git
+git remote add origin https://github.com/LynXMaSTeR/LSaat.git
 git push -u origin main
 ```
 
-Not: Kimlik dogrulama sorunu olursa GitHub Personal Access Token (PAT) kullan.
+Not:
+- Kimlik dogrulama sorunu olursa GitHub PAT kullan.
+- GIF onizlemeleri README ile birlikte ayni committe gonderilebilir.
 
 ---
 
 ## EN
+
 ### Project Summary
-LSaat is a modern flip-clock interface implemented in a single HTML file. Its responsive layout logic dynamically adjusts card sizes, spacing, and typography based on viewport size.
+LSaat is a flip-clock style web interface that runs from a single HTML file.
+It uses responsive calculations to adapt card sizing, spacing, and typography
+to different viewport sizes.
 
 ### Features
-- Single-file architecture: only `LSaat.html`
-- Flip-card animation (hours, minutes, seconds)
-- Toggle seconds visibility
+- Flip animation for hours, minutes, and seconds
+- Toggle seconds group on/off
 - Switch between 12h and 24h formats
-- Fullscreen mode
-- Invert-colors mode
+- Fullscreen toggle
+- Invert color mode
 - Date display
-- Responsive sizing and spacing calculations
 
 ### Keyboard Shortcuts
-- `D`: Toggle invert colors
+- `D`: Toggle invert mode
 - `F`: Toggle fullscreen
 - `G`: Toggle seconds visibility
-- `T`: Toggle 12h / 24h format
+- `T`: Toggle 12h / 24h mode
+
+### Technical Notes
+- File: `LSaat.html`
+- Stack: HTML, CSS, JavaScript
+- Responsive behavior:
+	- Group spacing is viewport-based.
+	- Card width is recalculated based on visible groups.
+	- Digit and date typography scales with layout constraints.
+- Animation model:
+	- Separate top and bottom card halves.
+	- Coordinated `top-flip` and `bottom-flip` layers.
 
 ### Run Locally
 1. Clone or download the repository.
@@ -90,38 +116,32 @@ python3 -m http.server 8080
 
 Then open `http://localhost:8080/LSaat.html`.
 
-### Upload to GitHub (New Repository)
-1. Create a new repository on GitHub (preferably empty).
-2. Open terminal in the project folder:
+### GIF Preview (Our Own Assets)
+No external GIF links are used. Previews are stored as local project assets:
+- `assets/preview-dark.gif`
+- `assets/preview-light.gif`
 
-```bash
-cd "/Users/samed/Desktop/Projeler/Antigravity Projeler/LSaat/LSaat"
-```
+![LSaat Dark Preview](assets/preview-dark.gif)
+![LSaat Light Preview](assets/preview-light.gif)
 
-3. Initialize git and add files:
+### Push to GitHub
 
 ```bash
 git init
-git add LSaat.html README.md PROJECT_OVERVIEW.md
+git add LSaat.html README.md assets/preview-dark.gif assets/preview-light.gif
 git commit -m "Initial commit: LSaat HTML flip clock"
-```
-
-4. Set branch, add remote, and push:
-
-```bash
 git branch -M main
-git remote add origin https://github.com/<username>/<repo-name>.git
+git remote add origin https://github.com/LynXMaSTeR/LSaat.git
 git push -u origin main
 ```
 
-If authentication fails, use a GitHub Personal Access Token (PAT).
-
----
-
 ## Project Structure
+
 ```text
 LSaat/
-  LSaat.html
-  README.md
-  PROJECT_OVERVIEW.md
+	LSaat.html
+	README.md
+	assets/
+		preview-dark.gif
+		preview-light.gif
 ```
