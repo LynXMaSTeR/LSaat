@@ -17,8 +17,13 @@ Kurulum için projeyi indirip `LSaat.html` dosyasını tarayıcıda açmanız ye
 - `T`: 12/24 saat biçimini değiştir
 
 ### Ekran Görüntüleri
+#### Animasyonlu Önizleme (GIF)
 ![Koyu Tema Önizleme](assets/preview-dark.gif)
 ![Açık Tema Önizleme](assets/preview-light.gif)
+
+#### Statik Görseller (PNG)
+![Koyu Tema Ekran Görüntüsü](assets/dark.png)
+![Açık Tema Ekran Görüntüsü](assets/light.png)
 
 ---
 
@@ -34,5 +39,10 @@ To use it, download the project and open `LSaat.html` in your browser.
 - `T`: Switch between 12-hour and 24-hour formats
 
 ### Screenshots
+#### Animated Preview (GIF)
 ![Dark Theme Preview](assets/preview-dark.gif)
 ![Light Theme Preview](assets/preview-light.gif)
+
+#### Static Images (PNG)
+![Dark Theme Screenshot](assets/dark.png)
+![Light Theme Screenshot](assets/light.png)
