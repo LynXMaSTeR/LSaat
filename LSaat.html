@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LSaat</title>
+  <style>
+    :root {
+      --bg: #000;
+      --card-top: #2c2f34;
+      --card-bottom: #24272c;
+      --digit: #f4f5f7;
+      --split-dark: #0d0f12;
+      --split-light: #2f3339;
+      --hinge-core: #0a0b0d;
+      --hinge-ring: #1a1d22;
+      --hinge-highlight: rgba(255, 255, 255, 0.22);
+      --info-text: rgba(199, 205, 214, 0.56);
+      --group-gap: clamp(24px, 3vw, 66px);
+      --digit-gap: clamp(8px, 0.9vw, 16px);
+      --edge-gap: var(--group-gap);
+      --card-width: clamp(92px, 11.8vw, 238px);
+      --digit-size: clamp(80px, 12.6vw, 220px);
+      --date-size: clamp(15px, 2vw, 52px);
+      --flip-duration: 0.46s;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 20%, #0b0b0b 0%, #000 56%);
+      color: var(--digit);
+      font-family: "SF Pro Display", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      cursor: none;
+    }
+
+    body.inverted {
+      filter: invert(1) hue-rotate(180deg);
+    }
+
+    .screen {
+      width: 100vw;
+      padding: 0 var(--edge-gap);
+      display: grid;
+      grid-template-rows: auto auto;
+      justify-items: center;
+      gap: clamp(28px, 6.5vh, 84px);
+    }
+
+    .clock-container {
+      display: flex;
+      align-items: center;
+      gap: var(--group-gap);
+      perspective: 1300px;
+      filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.45));
+    }
+
+    .flip-group {
+      display: flex;
+      align-items: center;
+      gap: var(--digit-gap);
+    }
+
+    .hour-group [data-hour-tens]::after {
+      content: attr(data-ampm);
+      position: absolute;
+      left: clamp(8px, 0.8vw, 16px);
+      bottom: clamp(8px, 0.8vw, 16px);
+      font-size: var(--date-size);
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: var(--info-text);
+      text-transform: uppercase;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    body.show-ampm .hour-group [data-hour-tens]::after {
+      opacity: 1;
+    }
+
+    .flip-card {
+      position: relative;
+      width: var(--card-width);
+      aspect-ratio: 0.76 / 1;
+      border-radius: clamp(14px, 1.2vw, 24px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      background: linear-gradient(180deg, #2c2f34 0%, #24272c 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.45),
+        0 16px 28px rgba(0, 0, 0, 0.38);
+    }
+
+    .top,
+    .bottom,
+    .top-flip,
+    .bottom-flip {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+      font-size: var(--digit-size);
+      font-weight: 700;
+      letter-spacing: -0.065em;
+      line-height: 1;
+      color: var(--digit);
+      text-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.25);
+      backface-visibility: hidden;
+    }
+
+    .top,
+    .top-flip {
+      top: 0;
+      align-items: flex-end;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+      background: linear-gradient(180deg, #2f3238 0%, #282b31 100%);
+    }
+
+    .bottom,
+    .bottom-flip {
+      bottom: 0;
+      align-items: flex-start;
+      background: linear-gradient(180deg, #24272c 0%, #202328 100%);
+    }
+
+    .top > span,
+    .top-flip > span {
+      transform: translateY(51%);
+    }
+
+    .bottom > span,
+    .bottom-flip > span {
+      transform: translateY(-49%);
+    }
+
+    .split-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(50% - 1px);
+      height: 2px;
+      z-index: 8;
+      background: linear-gradient(180deg, var(--split-dark), var(--split-light));
+    }
+
+    .hinge {
+      position: absolute;
+      top: 50%;
+      width: clamp(10px, 1.2vw, 19px);
+      height: clamp(10px, 1.2vw, 19px);
+      border-radius: 50%;
+      transform: translateY(-50%);
+      z-index: 9;
+      background: radial-gradient(circle at 30% 30%, var(--hinge-highlight), transparent 35%),
+        radial-gradient(circle, var(--hinge-ring) 42%, var(--hinge-core) 75%);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.65);
+    }
+
+    .hinge.left {
+      opacity: 0;
+    }
+
+    .hinge.right {
+      opacity: 0;
+    }
+
+    .edge-left .hinge.left,
+    .edge-right .hinge.right {
+      opacity: 0;
+    }
+
+    .top-flip {
+      z-index: 10;
+      transform-origin: bottom;
+      animation: flip-top calc(var(--flip-duration) / 2) ease-in forwards;
+    }
+
+    .bottom-flip {
+      z-index: 9;
+      transform-origin: top;
+      transform: rotateX(90deg);
+      animation: flip-bottom calc(var(--flip-duration) / 2) ease-out calc(var(--flip-duration) / 2) forwards;
+    }
+
+    @keyframes flip-top {
+      to {
+        transform: rotateX(-90deg);
+      }
+    }
+
+    @keyframes flip-bottom {
+      to {
+        transform: rotateX(0deg);
+      }
+    }
+
+    .info-bar {
+      display: flex;
+      align-items: center;
+      gap: clamp(10px, 1vw, 20px);
+      color: var(--info-text);
+      text-transform: uppercase;
+      letter-spacing: clamp(1px, 0.28vw, 5px);
+      font-size: var(--date-size);
+      font-weight: 300;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .dot {
+      width: clamp(5px, 0.55vw, 11px);
+      height: clamp(5px, 0.55vw, 11px);
+      border-radius: 50%;
+      background: rgba(205, 209, 216, 0.55);
+    }
+
+    @media (max-width: 900px) {
+      .screen {
+        gap: 34px;
+      }
+
+      .clock-container {
+        gap: 18px;
+      }
+
+      .flip-group {
+        gap: 8px;
+      }
+
+      .info-bar {
+        letter-spacing: 1px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="screen">
+    <section class="clock-container" aria-label="LSaat">
+      <div class="flip-group hour-group">
+        <article class="flip-card edge-left" data-hour-tens></article>
+        <article class="flip-card edge-right" data-hour-ones></article>
+      </div>
+
+      <div class="flip-group">
+        <article class="flip-card edge-left" data-minute-tens></article>
+        <article class="flip-card edge-right" data-minute-ones></article>
+      </div>
+
+      <div class="flip-group" data-seconds-group>
+        <article class="flip-card edge-left" data-second-tens></article>
+        <article class="flip-card edge-right" data-second-ones></article>
+      </div>
+    </section>
+
+    <section class="info-bar" aria-live="polite">
+      <span id="date">LOADING...</span>
+    </section>
+  </main>
+
+  <script>
+    const cards = {
+      hourTens: document.querySelector("[data-hour-tens]"),
+      hourOnes: document.querySelector("[data-hour-ones]"),
+      minuteTens: document.querySelector("[data-minute-tens]"),
+      minuteOnes: document.querySelector("[data-minute-ones]"),
+      secondTens: document.querySelector("[data-second-tens]"),
+      secondOnes: document.querySelector("[data-second-ones]")
+    };
+    const secondsGroup = document.querySelector("[data-seconds-group]");
+    let use24Hour = true;
+    let showSeconds = true;
+
+    function clamp(value, minValue, maxValue) {
+      return Math.max(minValue, Math.min(maxValue, value));
+    }
+
+    function updateLayout() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const visibleGroupCount = showSeconds ? 3 : 2;
+
+      const groupGap = clamp(vw * 0.03, 24, 66);
+      const digitGap = clamp(vw * 0.009, 8, 16);
+      const totalCards = visibleGroupCount * 2;
+      const totalIntraGroupSpacing = visibleGroupCount * digitGap;
+      const totalInterGroupSpacing = Math.max(0, visibleGroupCount - 1) * groupGap;
+      const horizontalBudget = Math.max(240, vw - (groupGap * 2));
+      const widthConstrainedCard = (horizontalBudget - totalIntraGroupSpacing - totalInterGroupSpacing) / totalCards;
+      const cardWidth = Math.max(72, widthConstrainedCard);
+
+      const dateSize = clamp(vw * 0.02, 15, 52);
+      const digitSize = Math.max(80, cardWidth * 0.95);
+      const verticalGap = clamp(vh * 0.065, 28, 84);
+
+      document.documentElement.style.setProperty("--group-gap", `${groupGap}px`);
+      document.documentElement.style.setProperty("--digit-gap", `${digitGap}px`);
+      document.documentElement.style.setProperty("--edge-gap", `${groupGap}px`);
+      document.documentElement.style.setProperty("--card-width", `${cardWidth}px`);
+      document.documentElement.style.setProperty("--date-size", `${dateSize}px`);
+      document.documentElement.style.setProperty("--digit-size", `${digitSize}px`);
+      document.querySelector(".screen").style.gap = `${verticalGap}px`;
+    }
+
+    function halfElement(className, value) {
+      const half = document.createElement("div");
+      half.className = className;
+
+      const text = document.createElement("span");
+      text.textContent = value;
+      half.appendChild(text);
+
+      return half;
+    }
+
+    function decorateCard(card, value) {
+      card.innerHTML = "";
+      card.appendChild(halfElement("top", value));
+      card.appendChild(halfElement("bottom", value));
+
+      const splitLine = document.createElement("div");
+      splitLine.className = "split-line";
+      card.appendChild(splitLine);
+
+      const leftHinge = document.createElement("span");
+      leftHinge.className = "hinge left";
+      card.appendChild(leftHinge);
+
+      const rightHinge = document.createElement("span");
+      rightHinge.className = "hinge right";
+      card.appendChild(rightHinge);
+    }
+
+    Object.values(cards).forEach((card) => decorateCard(card, "0"));
+
+    function flip(card, nextDigit) {
+      const top = card.querySelector(".top span");
+      const bottom = card.querySelector(".bottom span");
+      const currentDigit = top.textContent;
+
+      if (currentDigit === nextDigit) {
+        return;
+      }
+
+      card.querySelectorAll(".top-flip, .bottom-flip").forEach((layer) => layer.remove());
+
+      const topFlip = halfElement("top-flip", currentDigit);
+      const bottomFlip = halfElement("bottom-flip", nextDigit);
+
+      topFlip.addEventListener("animationstart", () => {
+        top.textContent = nextDigit;
+      });
+
+      topFlip.addEventListener("animationend", () => {
+        topFlip.remove();
+      });
+
+      bottomFlip.addEventListener("animationend", () => {
+        bottom.textContent = nextDigit;
+        bottomFlip.remove();
+      });
+
+      card.appendChild(topFlip);
+      card.appendChild(bottomFlip);
+    }
+
+    function formatDate(now) {
+      const text = now.toLocaleDateString(undefined, {
+        weekday: "long",
+        month: "long",
+        day: "numeric"
+      });
+
+      return text.toLocaleUpperCase();
+    }
+
+    function setSecondsVisibility() {
+      secondsGroup.style.display = showSeconds ? "flex" : "none";
+      updateLayout();
+    }
+
+    async function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const rawHour = now.getHours();
+      const displayHour = use24Hour ? rawHour : ((rawHour + 11) % 12) + 1;
+      const hh = String(displayHour).padStart(2, "0");
+      const mm = String(now.getMinutes()).padStart(2, "0");
+      const ss = String(now.getSeconds()).padStart(2, "0");
+
+      flip(cards.hourTens, hh[0]);
+      flip(cards.hourOnes, hh[1]);
+      flip(cards.minuteTens, mm[0]);
+      flip(cards.minuteOnes, mm[1]);
+      if (showSeconds) {
+        flip(cards.secondTens, ss[0]);
+        flip(cards.secondOnes, ss[1]);
+      }
+
+      cards.hourTens.dataset.ampm = rawHour >= 12 ? "PM" : "AM";
+      document.body.classList.toggle("show-ampm", !use24Hour);
+
+      document.getElementById("date").textContent = formatDate(now);
+    }
+
+    setSecondsVisibility();
+    updateClock();
+    setInterval(updateClock, 1000);
+    window.addEventListener("resize", updateLayout);
+
+    document.addEventListener("keydown", async (event) => {
+      switch (event.key.toLowerCase()) {
+        case "d":
+          event.preventDefault();
+          document.body.classList.toggle("inverted");
+          break;
+        case "f":
+          event.preventDefault();
+          try {
+            await toggleFullscreen();
+          } catch (_) {
+            // No-op: fullscreen may be blocked by browser policy.
+          }
+          break;
+        case "g":
+          event.preventDefault();
+          showSeconds = !showSeconds;
+          setSecondsVisibility();
+          break;
+        case "t":
+          event.preventDefault();
+          use24Hour = !use24Hour;
+          updateClock();
+          break;
+        default:
+          break;
+      }
+    });
+  </script>
+</body>
+</html>
