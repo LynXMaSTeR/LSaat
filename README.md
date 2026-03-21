@@ -21,10 +21,6 @@ Kurulum için projeyi indirip `LSaat.html` dosyasını tarayıcıda açmanız ye
 ![Koyu Tema Önizleme](assets/preview-dark.gif)
 ![Açık Tema Önizleme](assets/preview-light.gif)
 
-#### Statik Görseller (PNG)
-![Koyu Tema Ekran Görüntüsü](assets/dark.png)
-![Açık Tema Ekran Görüntüsü](assets/light.png)
-
 ---
 
 ## EN
@@ -42,7 +38,3 @@ To use it, download the project and open `LSaat.html` in your browser.
 #### Animated Preview (GIF)
 ![Dark Theme Preview](assets/preview-dark.gif)
 ![Light Theme Preview](assets/preview-light.gif)
-
-#### Static Images (PNG)
-![Dark Theme Screenshot](assets/dark.png)
-![Light Theme Screenshot](assets/light.png)

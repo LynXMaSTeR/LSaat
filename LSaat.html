@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LSaat</title>
+  <link rel="icon" type="image/png" href="LSaat.png">
+  <link rel="apple-touch-icon" href="LSaat.png">
   <style>
     :root {
       --bg: #000;
@@ -48,6 +50,19 @@
 
     body.inverted {
       filter: invert(1) hue-rotate(180deg);
+    }
+
+    .app-logo {
+      position: fixed;
+      top: clamp(10px, 1.4vw, 22px);
+      left: clamp(10px, 1.4vw, 22px);
+      width: clamp(36px, 4vw, 56px);
+      height: auto;
+      z-index: 30;
+      opacity: 0.9;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45));
+      user-select: none;
+      pointer-events: none;
     }
 
     .screen {
@@ -235,6 +250,10 @@
     }
 
     @media (max-width: 900px) {
+      .app-logo {
+        width: 34px;
+      }
+
       .screen {
         gap: 34px;
       }
@@ -254,6 +273,7 @@
   </style>
 </head>
 <body>
+  <img class="app-logo" src="LSaat.png" alt="LSaat Logo">
   <main class="screen">
     <section class="clock-container" aria-label="LSaat">
       <div class="flip-group hour-group">
