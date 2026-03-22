@@ -5,6 +5,15 @@ HTML, CSS ve JavaScript ile geliştirilmiştir.
 
 Repository: https://github.com/LynXMaSTeR/LSaat
 
+### Ekran Görüntüleri
+#### Animasyonlu Önizleme (GIF)
+![Koyu Tema Önizleme](assets/preview-dark.gif)
+![Açık Tema Önizleme](assets/preview-light.gif)
+
+#### Statik Görseller (PNG)
+![Koyu Tema Ekran Görüntüsü](assets/dark.png)
+![Açık Tema Ekran Görüntüsü](assets/light.png)
+
 ## TR
 
 LSaat HTML, CSS ve JavaScript ile hazırlanmış tam ekran mekanik bir saat uygulamasıdır.
@@ -16,14 +25,6 @@ Kurulum için projeyi indirip `LSaat.html` dosyasını tarayıcıda açmanız ye
 - `G`: Saniyeleri göster/gizle
 - `T`: 12/24 saat biçimini değiştir
 
-### Ekran Görüntüleri
-#### Animasyonlu Önizleme (GIF)
-![Koyu Tema Önizleme](assets/preview-dark.gif)
-![Açık Tema Önizleme](assets/preview-light.gif)
-
-#### Statik Görseller (PNG)
-![Koyu Tema Ekran Görüntüsü](assets/dark.png)
-![Açık Tema Ekran Görüntüsü](assets/light.png)
 
 ---
 
