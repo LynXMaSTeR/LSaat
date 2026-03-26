@@ -35,9 +35,3 @@ To use it, download the project and open `LSaat.html` in your browser.
 - `F`: Toggle fullscreen
 - `G`: Show/hide seconds
 - `T`: Switch between 12-hour and 24-hour formats
-
-![Dark Theme Preview](assets/preview-dark.gif)
-![Light Theme Preview](assets/preview-light.gif)
-
-![Dark Theme Screenshot](assets/dark.png)
-![Light Theme Screenshot](assets/light.png)
